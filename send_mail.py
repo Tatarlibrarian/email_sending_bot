@@ -50,6 +50,10 @@ def send_invitations():
                 name = row['Name'] # 确保 CSV 表头是 Name
                 email = row['Email'] # 确保 CSV 表头是 Email
 
+                # 添加这两行调试
+                print(f"DEBUG - 读取到的 name: '{name}'")  
+                print(f"DEBUG - 读取到的 email: '{email}'")
+
                 if not email:
                     continue
 
