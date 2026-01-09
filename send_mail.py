@@ -13,7 +13,7 @@ SMTP_PORT = 587
 SENDER_EMAIL = os.environ.get('MY_EMAIL')        # 从 GitHub Secrets 读取
 SENDER_PASSWORD = os.environ.get('MY_PASSWORD')  # 从 GitHub Secrets 读取
 
-EMAIL_SUBJECT = '【邀请】Level Up Your Stream: Get Your AI Co-Host Free for 7 Days!'
+EMAIL_SUBJECT = 'Level Up Your Stream: Get Your AI Co-Host Free for 7 Days!'
 CSV_FILE = 'streamers.csv'
 HTML_TEMPLATE = 'template.html'
 # ===========================================
