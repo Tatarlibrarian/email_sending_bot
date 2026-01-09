@@ -42,47 +42,40 @@ def send_invitations():
         print(f"无法连接服务器: {e}")
         return
 
-try:
-    with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
-        reader = csv. DictReader(csvfile)
-        
-        for row in reader:
-            name = row. get('Name', '').strip()
-            email = row.get('Email', '').strip()
-
-            print(f"DEBUG - 读取到的 name: '{name}'")
-            print(f"DEBUG - 读取到的 email: '{email}'")
+    try:
+        with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
             
-            if not email or not name:
-                print(f"跳过:  Name='{name}', Email='{email}'")
-                continue
+            for row in reader:
+                name = row['Name'] # 确保 CSV 表头是 Name
+                email = row['Email'] # 确保 CSV 表头是 Email
 
-            print(f"\n正在发送给: {name} ({email})...")
-            
-            # ===== 关键调试：检查模板内容 =====
-            print(f"DEBUG - 模板前100字符:  {html_content[:100]}")
-            print(f"DEBUG - 模板中是否包含{{name}}: {'{name}' in html_content}")
-            
-            personalized_html = html_content. replace('{name}', name)
-            
-            print(f"DEBUG - 替换后前100字符: {personalized_html[:100]}")
-            print(f"DEBUG - 替换是否生效: {name in personalized_html}")
-            # ===================================
+                # 添加这两行调试
+                print(f"DEBUG - 读取到的 name: '{name}'")  
+                print(f"DEBUG - 读取到的 email: '{email}'")
 
-            msg = MIMEMultipart()
-            msg['From'] = formataddr(("Eugene from Tatalala", SENDER_EMAIL))
-            msg['To'] = email
-            msg['Subject'] = EMAIL_SUBJECT
+                if not email:
+                    continue
 
-            msg.attach(MIMEText(personalized_html, 'html', 'utf-8'))
+                print(f"正在发送给: {name} ({email})...")
 
-            try:
-                server. sendmail(SENDER_EMAIL, email, msg.as_string())
-                print(f"SUCCESS: 已发送给 {name}\n")
-            except Exception as e:
-                print(f"FAILED: 发送给 {name} 失败.  原因: {e}\n")
+                # 这里对应你 HTML 里的 {name}
+                personalized_html = html_content.replace('{name}', name)
 
-            time.sleep(5)
+                msg = MIMEMultipart()
+                msg['From'] = formataddr(("Eugene from Tatalala", SENDER_EMAIL))
+                msg['To'] = email
+                msg['Subject'] = EMAIL_SUBJECT
+
+                msg.attach(MIMEText(personalized_html, 'html', 'utf-8'))
+
+                try:
+                    server.sendmail(SENDER_EMAIL, email, msg.as_string())
+                    print(f"SUCCESS: 已发送给 {name}")
+                except Exception as e:
+                    print(f"FAILED: 发送给 {name} 失败. 原因: {e}")
+
+                time.sleep(5) # 稍微延长一点间隔，更安全
 
     except FileNotFoundError:
         print(f"错误: 找不到 CSV 文件 {CSV_FILE}")
