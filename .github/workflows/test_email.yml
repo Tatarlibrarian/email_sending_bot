@@ -1,0 +1,26 @@
+name: Test Single Email
+
+# 只允许手动触发，不会自动运行
+on:
+  workflow_dispatch:
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Run Test Script
+        env:
+          # 直接复用你已经配好的 Secrets
+          MY_EMAIL: ${{ secrets.MY_EMAIL }}
+          MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
+        run: |
+          python test_mail.py
