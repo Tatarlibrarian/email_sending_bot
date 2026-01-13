@@ -16,12 +16,12 @@
     table { border-collapse: collapse !important; }
     body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: 'Inter', Helvetica, Arial, sans-serif; background-color: #0b0f19; color: #f3f4f6; }
 
-    /* Gradient Text Style */
-    .gradient-text {
-        background: linear-gradient(135deg, #a78bfa 0%, #2dd4bf 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: #a78bfa; 
+    /* 修复说明：
+       移除了 .gradient-text 类中的 background-clip 属性。
+       改为使用纯色 (Teal/Cyan)，这在所有邮件客户端中都能完美显示。
+    */
+    .highlight-text {
+        color: #2dd4bf; /* 使用亮青色代替渐变，确保安全显示 */
         font-weight: 800;
     }
 
@@ -54,7 +54,7 @@
                                 <tr>
                                     <td align="left" valign="middle">
                                         <a href="https://www.tatalala.com" style="text-decoration: none;">
-                                            <!-- 使用了最新的透明 PNG Logo -->
+                                            <!-- 透明 PNG Logo -->
                                             <img src="https://oss-upload.talking.show/public-static/tatalala/tatalala-logo%E9%80%8F%E6%98%8E.png" alt="Tatalala" width="70" style="display: block; width: 70px; height: auto;">
                                         </a>
                                     </td>
@@ -83,7 +83,8 @@
                             <!-- Main Headline -->
                             <h1 class="h1-mobile" style="margin: 0 0 20px 0; font-family: 'Inter', sans-serif; font-size: 38px; line-height: 46px; color: #ffffff; font-weight: 800; letter-spacing: -1px;">
                                 Turn Live Chat Into<br>
-                                <span class="gradient-text">Subscription Revenue</span>
+                                <!-- 已修改为纯色类 -->
+                                <span class="highlight-text">Subscription Revenue</span>
                             </h1>
 
                             <p style="margin: 0 0 32px 0; font-family: 'Inter', sans-serif; font-size: 18px; line-height: 28px; color: #9ca3af;">
